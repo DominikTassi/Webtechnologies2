@@ -1,18 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const Bartender = require('./Restaurant');
+const Manager = require('./Restaurant');
 const mongoose = require('mongoose');
 
 
 router.get('/bar/filldb', function (req, res) {
     //Data to add
-    const bartenders = [
+    const managers = [
         {"name": "Kiss Gábor"},
-        {"name": "Nagy Béla"}
     ];
 
-    bartenders.forEach((item) => {
-        Bartender.create({ //Add item to db
+    managers.forEach((item) => {
+        Manager.create({ //Add item to db
             _id: new mongoose.Types.ObjectId(),
             name: item['name']
         }, (err, doc) => { //Error Handler
@@ -26,8 +25,8 @@ router.get('/bar/filldb', function (req, res) {
     res.status(200).send("Data Inserted");
 });
 
-router.post("/bar/add", function (req, res) {
-    Bartender.create({ //Add item to db
+router.post("/managger/add", function (req, res) {
+    Manager.create({ //Add item to db
         _id: new mongoose.Types.ObjectId(),
         name: item['name']
     }, function (err, doc) {
