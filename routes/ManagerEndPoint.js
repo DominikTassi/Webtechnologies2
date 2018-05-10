@@ -1,38 +1,37 @@
 const express = require('express');
 const router = express.Router();
-const Bartender = require('./Restaurant');
+const Bartender = require('./Bartender');
 const mongoose = require('mongoose');
 
-
-router.get('/bar/filldb', function (req, res) {
+//Initialize db
+router.get('/filldb', (req, res) => {
     //Data to add
-    const bartenders = [
-        {"name": "Kiss Gábor"},
-        {"name": "Nagy Béla"}
+    const managers = [
+        {"name": "Bele Sándor"},
     ];
 
-    bartenders.forEach((item) => {
+    managers.forEach((item) => {
         Bartender.create({ //Add item to db
             _id: new mongoose.Types.ObjectId(),
             name: item['name']
         }, (err, doc) => { //Error Handler
             if (err !== null) {
-                console.log("error!" + err.toString());
+                console.log("Hiba!" + err.toString());
                 console.log(doc);
                 return res.status(415).send(doc);
             }
         });
     });
-    res.status(200).send("Data Inserted");
+    res.status(200).send("Bartenders Inserted");
 });
 
-router.post("/bar/add", function (req, res) {
+router.post("/add", (req, res) => {
     Bartender.create({ //Add item to db
         _id: new mongoose.Types.ObjectId(),
         name: item['name']
-    }, function (err, doc) {
+    }, (err, doc) => {
         if (err !== null) { //Error Handler
-            console.log("error!" + err.toString());
+            console.log("Hiba!" + err.toString());
             console.log(doc);
             res.status(415).send(doc);
         }
