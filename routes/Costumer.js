@@ -1,11 +1,13 @@
-const mongoose = require('mongoose');
-const db = require('./Restaurant');
-const Schema = mongoose.Schema;
+var mongoose = require('mongoose');
 
-const CostumerSchema = new Schema({
-    _id: Schema.ObjectId,
-    name: String,
-    billing_address: String
-}, {versionKey: false});
+var db = require('./DB');
 
-module.exports = db.model("Costumer", CostumerSchema);
+var Schema = mongoose.Schema;
+
+var CustomerSchema = new Schema({
+    _id : Schema.ObjectId,
+    name : String,
+    billing_address : String
+});
+
+module.exports = db.model('customer',CustomerSchema);

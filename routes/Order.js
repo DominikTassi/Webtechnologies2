@@ -1,16 +1,17 @@
-const mongoose = require('mongoose');
-const db = require('./Restaurant');
-const Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var db = require('./DB');
 
-const OrderSchema = new Schema({
-    _id: Schema.ObjectId,
-    status: {enum: ["Open", "Close"]},
-    fulfilled: Boolean,
-    received: Boolean,
-    foodNames: Array,
-    bartendersName: String,
-    costumersName: String,
-    totalCost: Number
-}, {versionKey: false});
+var Schema = mongoose.Schema;
 
-module.exports = db.model("Order", OrderSchema);
+var OrderSchema = new Schema({
+    _id : Schema.Types.ObjectId,
+    totalCost : Number,
+    status : String,
+    received : Boolean,
+    fulfilled: String,
+    food_fk : [{type: Schema.Types.ObjectId , ref: 'food'}],
+    employee_fk : { type: Schema.Types.ObjectId, ref: 'employee'},
+    customer_fk: { type: Schema.Types.ObjectId, ref: 'customer'}
+});
+
+module.exports = db.model('order',OrderSchema);

@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
-const db = require('./Restaurant');
-const Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var db = require('./DB');
 
-const FoodSchema = new Schema({
-    _id: Schema.ObjectId,
-    type: {enum: ["Food", "Drink"]},
-    name: String,
-    price: Number,
-    ingredients: Array
-}, {versionKey: false});
+var Schema = mongoose.Schema;
 
-module.exports = db.model("Food", FoodSchema);
+var FoodSchema = new Schema({
+    _id : Schema.Types.ObjectId,
+    name : String,
+    price : Number,
+    type : String
+});
+
+module.exports = db.model('food',FoodSchema);
