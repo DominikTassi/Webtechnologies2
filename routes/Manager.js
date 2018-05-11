@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const db = require('./Restaurant');
+const db = require('./Database');
 const Schema = mongoose.Schema;
 
 const ManagerSchema = new Schema({

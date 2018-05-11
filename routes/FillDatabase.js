@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var food = require('./food');
-var order = require('./order');
-var bartender = require('./bartender');
-var customer = require('./customer');
+var food = require('./Food');
+var order = require('./Order');
+var bartender = require('./Bartender');
+var customer = require('./Costumer');
 var mongoose = require('mongoose');
 
 router.get('/adminDB/addDatas',function(req,res){

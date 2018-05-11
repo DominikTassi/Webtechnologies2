@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var order = require('./order');
+var order = require('./Order');
 var mongoose = require('mongoose');
 
 router.get('/bartender/listOpenOrders',function(req,res){

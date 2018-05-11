@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var food = require('./food');
-var order = require('./order');
+var food = require('./Food');
+var order = require('./Order');
 var mongoose = require('mongoose');
 
 router.get('/customer/listAllFoods',function(req,res){

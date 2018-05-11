@@ -1,11 +1,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-var bartender = require('./routes/bartenderEndPoint');
-var food = require('./routes/foodEndPoint');
-var manager = require('./routes/managerEndPoint');
-var admin = require('./routes/fillDdEndPoint');
-var customer = require ('./routes/customerEndPoint');
+var bartender = require('./routes/BartenderEndPoint');
+var food = require('./routes/FoodEndPoint');
+var manager = require('./routes/ManagerEndPoint');
+var admin = require('./routes/FillDatabase');
+var customer = require ('./routes/CostumerEndPoint');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());

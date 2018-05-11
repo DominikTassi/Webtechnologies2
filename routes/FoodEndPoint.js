@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var food = require('./food');
+var food = require('./Food');
 var mongoose = require('mongoose');
 
 router.post('customer/createFood',function (req,res) {
