@@ -1,28 +1,30 @@
-var express = require('express');
-var router = express.Router();
-var order = require('./order');
-var mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
+const Bartender = require('./bartender');
+const mongoose = require('mongoose');
 
-router.get('/bartender/listOpenOrders',function(req,res){
-    order.find({status : 'Open'}).exec(function(err, doc) {
-        res.status(200).send(doc);
+router.post("/bartender/add", function (req, res) {
+    Bartender.create({ //Add item to db
+        _id: new mongoose.Types.ObjectId(),
+        name: item['name']
+    }, (err, doc) => {
+        if (err !== null) { //Error Handler
+            console.log("error!" + err.toString());
+            console.log(doc);
+            res.status(415).send(doc);
+        }
     });
 });
 
-router.post('/bartender/fullFillOrder',function(req,res){
-
-    order.find({'_id' : req.body['_id']}).exec(function(err,orders){
-        if(err){
-            console.log(err);
-        }
-        for(var i = 0; i < orders.length; i++){
-            orders[i].status = 'Closed';
-            orders[i].received = true;
-            orders[i].fulfilled = 'Yes';
-            orders[i].employee_fk = req.body['employee_fk'];
-            orders[i].save();
-        }
-        res.status(200).send(orders);
+router.get("/bartender/rnd", function (req, res) {
+    Bartender.count().exec(function (err, count) {
+        var random = Math.floor(Math.random() * count);
+        Bartender.findOne().skip(random).exec(function (err, doc) {
+            if (err) {
+                res.status(415).send(err.toString());
+            }
+            res.status(200).send(doc);
+        });
     });
 });
 

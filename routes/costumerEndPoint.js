@@ -13,21 +13,21 @@ const getTotalPrice = function (foods) {
     return totalPrice;
 };
 
-router.post("/add", function (req, res) {
+router.post("/costumer/add", function (req, res) {
     costumer.create({ //Add item to db
         _id: new mongoose.Types.ObjectId(),
         name: req.body['name'],
         billing_address: req.body['billing_address']
     }, (err, doc) => {
         if (err !== null) { //Error Handler
-            console.log("Hiba!" + err.toString());
+            console.log("error!" + err.toString());
             console.log(doc);
             res.status(415).send(doc);
         }
     });
 });
 
-router.post('/orderFood', function (req, res) {
+router.post('/costumer/orderFood', function (req, res) {
     const foods = req.body['foods'];
     const price = getTotalPrice(foods);
     order.create({ //Add item to db
@@ -41,7 +41,7 @@ router.post('/orderFood', function (req, res) {
         totalCost: price
     }, function (err, doc) { //Error Handler
         if (err !== null) {
-            console.log("Hiba!" + err.toString());
+            console.log("error!" + err.toString());
             console.log(doc);
             return res.status(415).send(doc);
         }

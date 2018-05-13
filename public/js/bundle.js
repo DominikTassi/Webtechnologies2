@@ -6,6 +6,7 @@ var order = {
 $(document).ready(function () {
     listFoods();
     listDrinks();
+    addForm();
 });
 
 function listFoods() {
@@ -162,46 +163,35 @@ function listDrinks() {
 }
 
 
-function orderbutton() {
-    var submit = document.createElement('input');
-    submit.id = "button";
-    submit.type = "button";
-    submit.value = "Submit";
-    var row = document.createElement('tr');
-    row.appendChild(submit);
-    tbody.appendChild(row);
-
-    document.getElementById('button').addEventListener("click", addForm);
-}
-
 
 
 
 
 function sendOrder() {
 
-    var order = $("form").serializeArray();
+    var form = $("form").serializeArray();
 
-    var costumersName = order[0].value + " " + order[1].value;
-    var address = order[2].value + " " + order[3].value + " " + order[4].value;
+    var costumersName = form[0].value + " " + form[1].value;
+    var address = form[2].value + " " + form[3].value + " " + form[4].value;
 
     $.ajax({
         type: "POST",
-        url: "costumer/add",
+        url: "/costumer/add",
         dataType: 'json',
         data: {name: costumersName, billing_address: address},
     });
 
-    $.get('bar/rnd', function (data) {
-        order.bartendersName = data.name;
-        order.costumersName = costumersName;
+    $.get('/bartender/rnd', function (data) {
+        form.bartendersName = data.name;
+        form.costumersName = costumersName;
         $.ajax({
             type: "POST",
             url: "costumer/orderFood",
             dataType: 'json',
-            data: order,
+            data: form,
         });
     });
+
     alert("Your order is successfully registered!");
 }
 
@@ -218,14 +208,13 @@ function addForm() {
     }
     console.log(order);
 
-    $('#orderButton').html('<form>\n' +
+    $('#makeOrder').html('<form>\n' +
         '    <strong>Just one more step to finish your order</strong><br>\n' +
         '    <input type="text" name="fname" placeholder="First name"><br>\n' +
         '    <input type="text" name="lname" placeholder="Last name"><br>\n' +
         '    <input type="text" name="city" placeholder="City"><br>\n' +
         '    <input type="text" name="address" placeholder="Address"><br>\n' +
         '    <input type="text" name="house" placeholder="House Number"><br>\n' +
-        '    <input type="button" id="order" value="Submit">\n' +
-        '</form>');
-    document.getElementById('order').addEventListener("click", sendOrder);
+        '    </form>\n' +
+        '    <button onclick="sendOrder()">submit</button>');
 }

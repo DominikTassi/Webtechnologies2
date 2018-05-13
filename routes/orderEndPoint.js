@@ -11,7 +11,7 @@ const getTotalPrice = function (foods) {
     return totalPrice;
 };
 
-router.post("/add", function (req, res) {
+router.post("/order/add", function (req, res) {
     const foods = req['foods'];
     const price = getTotalPrice(foods);
     Order.create({ //Add item to db

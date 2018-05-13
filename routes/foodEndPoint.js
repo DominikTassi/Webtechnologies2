@@ -3,7 +3,7 @@ const router = express.Router();
 const Food = require('./food');
 const mongoose = require('mongoose');
 
-router.post("/add", function (req, res) {
+router.post("/food/add", function (req, res) {
     Food.create({ //Add item to db
         _id: new mongoose.Types.ObjectId(),
         type: req.body['type'],
