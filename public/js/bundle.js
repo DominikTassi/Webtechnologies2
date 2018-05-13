@@ -153,21 +153,25 @@ function listDrinks() {
             tbody.appendChild(row);
         });
 
-        var submit = document.createElement('input');
-        submit.id = "button";
-        submit.type = "button";
-        submit.value = "Submit";
-        var row = document.createElement('tr');
-        row.appendChild(submit);
-        tbody.appendChild(row);
-
-        document.getElementById('button').addEventListener("click", addForm);
     });
 
     table.appendChild(tbody);
 
     $('#ListDrinks').append(table);
 
+}
+
+
+function orderbutton() {
+    var submit = document.createElement('input');
+    submit.id = "button";
+    submit.type = "button";
+    submit.value = "Submit";
+    var row = document.createElement('tr');
+    row.appendChild(submit);
+    tbody.appendChild(row);
+
+    document.getElementById('button').addEventListener("click", addForm);
 }
 
 
@@ -214,7 +218,7 @@ function addForm() {
     }
     console.log(order);
 
-    $('#ListFoods').html('<form>\n' +
+    $('#orderButton').html('<form>\n' +
         '    <strong>Just one more step to finish your order</strong><br>\n' +
         '    <input type="text" name="fname" placeholder="First name"><br>\n' +
         '    <input type="text" name="lname" placeholder="Last name"><br>\n' +
