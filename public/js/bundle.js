@@ -1,17 +1,14 @@
-var clicked = false;
 var order = {
     foods: [],
     bartendersName: "",
     costumersName: ""
 };
 $(document).ready(function () {
-    $('#listFoodsBtn').click(listFoods);
+    listFoods();
+    listDrinks();
 });
 
 function listFoods() {
-    if (clicked === true) {
-        return;
-    }
 
     var table = document.createElement('table');
     table.classList.add('table');
@@ -22,9 +19,7 @@ function listFoods() {
     var header = document.createElement('tr');
 
     var hfood = document.createElement('th');
-    var hdrink = document.createElement('th');
     hfood.append('Foods');
-    hdrink.append('Drinks');
 
     var hname = document.createElement('th');
     hname.append("Name");
@@ -37,8 +32,8 @@ function listFoods() {
 
     header.appendChild(hfood);
     header.appendChild(hname);
-    header.appendChild(hprice);
     header.appendChild(hingr);
+    header.appendChild(hprice);
     thead.appendChild(header);
     table.appendChild(thead);
 
@@ -73,14 +68,56 @@ function listFoods() {
 
             row.appendChild(cb);
             row.appendChild(name);
-            row.appendChild(price);
             row.appendChild(ingredients);
+            row.appendChild(price);
             tbody.appendChild(row);
         });
         var drinkrow = document.createElement('tr');
         drinkrow.appendChild(hdrink);
         tbody.appendChild(drinkrow);
     });
+
+    table.appendChild(tbody);
+
+    $('#ListFoods').append(table);
+
+}
+
+
+
+function listDrinks() {
+
+    var table = document.createElement('table');
+    table.classList.add('table');
+    table.classList.add('table-bordered');
+    table.classList.add('table-striped');
+
+    var thead = document.createElement('thead');
+    var header = document.createElement('tr');
+
+
+
+    var hdrink = document.createElement('th');
+    hdrink.append('Drinks');
+
+    var hname = document.createElement('th');
+    hname.append("Name");
+
+    var hprice = document.createElement('th');
+    hprice.append("Price(HUF)");
+
+    var hsize = document.createElement('th');
+    hsize.append("Size");
+
+    header.appendChild(hdrink);
+    header.appendChild(hname);
+    header.appendChild(hsize);
+    header.appendChild(hprice);
+    thead.appendChild(header);
+    table.appendChild(thead);
+
+    var tbody = document.createElement('tbody');
+
 
 
     $.get('/listDrinks', function (data) {
@@ -93,11 +130,11 @@ function listFoods() {
             var price = document.createElement('td');
             price.append(elem.price);
 
-            var ingredients = document.createElement('td');
+            var size = document.createElement('td');
             for (var i = 0; i < elem.ingredients.length; i++) {
-                ingredients.append(elem.ingredients[i]);
+                size.append(elem.ingredients[i]);
                 if (i !== elem.ingredients.length - 1) {
-                    ingredients.append(", ");
+                    size.append(", ");
                 }
             }
 
@@ -111,8 +148,8 @@ function listFoods() {
 
             row.appendChild(cb);
             row.appendChild(name);
+            row.appendChild(size);
             row.appendChild(price);
-            row.appendChild(ingredients);
             tbody.appendChild(row);
         });
 
@@ -129,18 +166,20 @@ function listFoods() {
 
     table.appendChild(tbody);
 
-    $('#MyContent').append(table);
+    $('#ListDrinks').append(table);
 
-    clicked = true;
 }
+
+
+
 
 
 function sendOrder() {
 
-    var asd = $("form").serializeArray();
+    var order = $("form").serializeArray();
 
-    var costumersName = asd[0].value + " " + asd[1].value;
-    var address = asd[2].value + " " + asd[3].value + " " + asd[4].value;
+    var costumersName = order[0].value + " " + order[1].value;
+    var address = order[2].value + " " + order[3].value + " " + order[4].value;
 
     $.ajax({
         type: "POST",
@@ -175,7 +214,7 @@ function addForm() {
     }
     console.log(order);
 
-    $('#MyContent').html('<form>\n' +
+    $('#ListFoods').html('<form>\n' +
         '    <strong>Just one more step to finish your order</strong><br>\n' +
         '    <input type="text" name="fname" placeholder="First name"><br>\n' +
         '    <input type="text" name="lname" placeholder="Last name"><br>\n' +
