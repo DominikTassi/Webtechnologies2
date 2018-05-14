@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="MongoConfiguration">
-    <option name="shellPath" value="localhost:27017/Manager" />
+    <option name="serverConfigurations">
+      <list>
+        <ServerConfiguration>
+          <option name="serverUrls">
+            <list>
+              <option value="localhost:27017" />
+            </list>
+          </option>
+          <option name="sshTunnelingConfiguration">
+            <SshTunnelingConfiguration />
+          </option>
+          <option name="userDatabase" value="Manager" />
+        </ServerConfiguration>
+      </list>
+    </option>
+    <option name="shellPath" value="/usr/bin/mongo" />
   </component>
 </project>

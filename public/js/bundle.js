@@ -73,9 +73,6 @@ function listFoods() {
             row.appendChild(price);
             tbody.appendChild(row);
         });
-        var drinkrow = document.createElement('tr');
-        drinkrow.appendChild(hdrink);
-        tbody.appendChild(drinkrow);
     });
 
     table.appendChild(tbody);
@@ -169,34 +166,6 @@ function listDrinks() {
 
 function sendOrder() {
 
-    var form = $("form").serializeArray();
-
-    var costumersName = form[0].value + " " + form[1].value;
-    var address = form[2].value + " " + form[3].value + " " + form[4].value;
-
-    $.ajax({
-        type: "POST",
-        url: "/costumer/add",
-        dataType: 'json',
-        data: {name: costumersName, billing_address: address},
-    });
-
-    $.get('/bartender/rnd', function (data) {
-        form.bartendersName = data.name;
-        form.costumersName = costumersName;
-        $.ajax({
-            type: "POST",
-            url: "costumer/orderFood",
-            dataType: 'json',
-            data: form,
-        });
-    });
-
-    alert("Your order is successfully registered!");
-}
-
-function addForm() {
-
     var j = 0;
     var elements = document.getElementsByClassName('box');
     for (var i = 0; i < elements.length; i++) {
@@ -207,6 +176,37 @@ function addForm() {
         }
     }
     console.log(order);
+
+
+    var form = $("form").serializeArray();
+    console.log(form);
+    var costumersName = form[0].value + " " + form[1].value;
+    var address = form[2].value + " " + form[3].value + " " + form[4].value;
+
+    $.ajax({
+        type: "POST",
+        url: "/costumer/add",
+        dataType: 'json',
+        data: {name: costumersName, billing_address: address},
+    },
+    $.get('/bartender/rnd', function (data) {
+        order.bartendersName = data.name;
+        order.costumersName = costumersName;
+        $.ajax({
+            type: "POST",
+            url: "/costumer/orderFood",
+            dataType: 'json',
+            data: order,
+        });
+    }));
+
+
+
+    alert("Your order is successfully registered!");
+}
+
+function addForm() {
+
 
     $('#makeOrder').html('<form>\n' +
         '    <strong>Just one more step to finish your order</strong><br>\n' +
