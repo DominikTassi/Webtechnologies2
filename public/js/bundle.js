@@ -209,7 +209,7 @@ function addForm() {
 
 
     $('#makeOrder').html('<form>\n' +
-        '    <strong>Just one more step to finish your order</strong><br>\n' +
+        '    <strong>Just one more step to finish your order.</strong><br>\n' +
         '    <input type="text" name="fname" placeholder="First name"><br>\n' +
         '    <input type="text" name="lname" placeholder="Last name"><br>\n' +
         '    <input type="text" name="city" placeholder="City"><br>\n' +

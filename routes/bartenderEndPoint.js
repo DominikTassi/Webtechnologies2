@@ -16,6 +16,12 @@ router.post("/bartender/add", function (req, res) {
     });
 });
 
+router.get("/bartender/getBartenders", function (req, res) {
+    Bartender.find({}).exec((err, doc) => {
+        res.status(200).send(doc);
+    });
+});
+
 router.get("/bartender/rnd", function (req, res) {
     Bartender.count().exec(function (err, count) {
         var random = Math.floor(Math.random() * count);

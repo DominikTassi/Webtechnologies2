@@ -117,8 +117,8 @@ router.get('/initdb', function (req, res) {
                 {name: "Borsodi Beer", price: 450,},
                 {name: "Borsodi Beer", price: 450,},
                 {name: "Borsodi Beer", price: 450,}],
-            bartendersName: "Barna Piroska",
-            costumersName: "Mészáros Lőrinc"
+            bartendersName: "Mészáros Lőrinc",
+            costumersName: "Barna Piroska"
         },
         {
             status: "Closed",
@@ -127,8 +127,8 @@ router.get('/initdb', function (req, res) {
             foods: [
                 {name: "Meat Soup", price: 750}
             ],
-            bartendersName: "Lakatos Belmondó",
-            costumersName: "Berényi Miklós"
+            bartendersName: "Berényi Miklós",
+            costumersName: "Lakatos Belmondó"
         }
     ];
     let ordersFood;

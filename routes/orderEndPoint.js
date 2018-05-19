@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Order = require('./order');
+const order = require('./order');
 const mongoose = require('mongoose');
 
 const getTotalPrice = function (foods) {
@@ -14,7 +14,7 @@ const getTotalPrice = function (foods) {
 router.post("/order/add", function (req, res) {
     const foods = req['foods'];
     const price = getTotalPrice(foods);
-    Order.create({ //Add item to db
+    order.create({ //Add item to db
         _id: new mongoose.Types.ObjectId(),
         status: "Open",
         fulfilled: false,
@@ -32,20 +32,20 @@ router.post("/order/add", function (req, res) {
     });
 });
 
-router.get("/listOrders", function (req, res) {
-    Order.find({}).exec((err, doc) => {
+router.get("/order/listOrders", function (req, res) {
+    order.find({}).exec((err, doc) => {
         res.status(200).send(doc);
     });
 });
 
 router.get("/listOpenOrders", (req, res) => {
-    Order.find({status: true}).exec((err, doc) => {
+    order.find({status: true}).exec((err, doc) => {
         res.status(200).send(doc);
     });
 });
 
 router.post("/fulfillOrder", function (req, res) {
-    Order.update(
+    order.update(
         {bartendersName: req.body['bartendersName']},
         {$set: {received: req.body['received']}}, (err, doc) => {
             if (err !== null) {
@@ -58,7 +58,7 @@ router.post("/fulfillOrder", function (req, res) {
 
 
 router.post("/closeOrder", function (req, res) {
-    Order.update(
+    order.update(
         {bartendersName: req.body['bartendersName']},
         {$set: {fulfilled: req.body['fulfilled'], status: req.body['status']}}, (err, doc) => {
             if (err !== null) {
