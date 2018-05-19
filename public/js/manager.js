@@ -1,5 +1,7 @@
 $(document).ready(function () {
     chart();
+    listOpenOrders();
+    money();
 });
 
 
@@ -56,6 +58,111 @@ function chart() {
                 }});
 
         },
+        failure: function(errMsg) {
+            alert(errMsg);
+        }});
+}
+
+
+function listOpenOrders() {
+    var table = document.createElement('table');
+    table.classList.add('table');
+    table.classList.add('table-bordered');
+    table.classList.add('table-striped');
+
+    var thead = document.createElement('thead');
+    var header = document.createElement('tr');
+
+    var hfulfill = document.createElement('th');
+    hfulfill.append('Fulfill');
+
+    var hname = document.createElement('th');
+    hname.append("Name");
+
+
+    var horder = document.createElement('th');
+    horder.append("Ordered");
+
+    var hprice = document.createElement('th');
+    hprice.append("Price(HUF)");
+
+
+    header.appendChild(hfulfill);
+    header.appendChild(hname);
+    header.appendChild(horder);
+    header.appendChild(hprice);
+    thead.appendChild(header);
+    table.appendChild(thead);
+
+    var tbody = document.createElement('tbody');
+
+    $.get('/order/listOrders', function (data) {
+        data.forEach(function (elem) {
+            if(elem.fulfilled == false){
+
+                var row = document.createElement('tr');
+
+                var name = document.createElement('td');
+                name.append(elem.costumersName);
+
+                var foods = document.createElement('td');
+                var orderedfoods = "";
+                elem.foods.forEach(function (food) {
+                    orderedfoods += food.name + ", ";
+                })
+                orderedfoods = orderedfoods.slice(0,-2);
+                foods.append(orderedfoods);
+
+                var price = document.createElement('td');
+                price.append(elem.totalCost);
+
+
+                var cb = document.createElement('td');
+                var element = document.createElement('input');
+                element.type = "checkbox";
+                element.className = "box";
+                element.name = elem.name;
+                element.value = elem.price;
+                cb.append(element);
+
+                row.appendChild(cb);
+                row.appendChild(name);
+                row.appendChild(foods);
+                row.appendChild(price);
+                tbody.appendChild(row);
+            }
+        });
+    });
+
+    table.appendChild(tbody);
+
+    $('#open').append(table);
+    $('#button').html('<button onclick="fulfill()">fulfill</button>')
+
+}
+
+
+function fulfill() {
+    //TODO
+}
+
+
+function money() {
+    var cash = 0;
+    $.ajax({
+        type: "GET",
+        url: "/order/listOrders",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(element){
+            element.forEach(function (order) {
+
+              if(order.fulfilled == true){
+                  cash += order.totalCost;
+              }
+            })
+            $('#cash').html(cash + " Ft")
+               },
         failure: function(errMsg) {
             alert(errMsg);
         }});
