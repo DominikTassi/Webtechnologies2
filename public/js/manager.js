@@ -1,3 +1,7 @@
+
+
+
+
 $(document).ready(function () {
     chart();
     listOpenOrders();
@@ -123,6 +127,7 @@ function listOpenOrders() {
                 element.className = "box";
                 element.name = elem.name;
                 element.value = elem.price;
+                element.id = elem._id;
                 cb.append(element);
 
                 row.appendChild(cb);
@@ -133,8 +138,8 @@ function listOpenOrders() {
             }
         });
     });
-
     table.appendChild(tbody);
+
 
     $('#open').append(table);
     $('#button').html('<button onclick="fulfill()">fulfill</button>')
@@ -143,7 +148,23 @@ function listOpenOrders() {
 
 
 function fulfill() {
-    //TODO
+
+    var j = 0;
+    var elements = document.getElementsByClassName('box');
+    for (var i = 0; i < elements.length; i++) {
+        if (elements[i].checked) {
+            $.ajax({
+                type: "POST",
+                url: "/order/fulfillOrder",
+                dataType: 'json',
+                data: {id: elements[i].id}
+            });
+
+            j++;
+        }
+    }
+    alert("The orders are succesfully fulfilled!");
+    location.reload();
 }
 
 

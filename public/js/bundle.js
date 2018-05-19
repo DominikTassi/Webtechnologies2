@@ -200,9 +200,8 @@ function sendOrder() {
         });
     }));
 
-
-
-    alert("Your order is successfully registered!");
+    alert("The goods are succesfully ordered! Thank you! :)");
+    location.reload();
 }
 
 function addForm() {

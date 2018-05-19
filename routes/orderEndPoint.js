@@ -41,8 +41,8 @@ router.get("/order/listOrders", function (req, res) {
 
 router.post("/order/fulfillOrder", function (req, res) {
     order.update(
-        {bartendersName: req.body['bartendersName']},
-        {$set: {received: req.body['received']}}, (err, doc) => {
+        {_id: req.body['id']},
+        {$set: {received: true, fulfilled: true}}, (err, doc) => {
             if (err !== null) {
                 res.status(500).json({error: "Application error"});
                 return console.log(err);
